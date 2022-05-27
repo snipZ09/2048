@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CellManager : MonoBehaviour
 {
     public static CellManager instance;
 
+    public GameObject grid;
     public Cell[] cells;
+    public Tile tile;
 
     private void Awake()
     {
@@ -22,17 +25,35 @@ public class CellManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Transform[] transforms = new Transform[cells.Length];
-        //for(int i = 0; i < cells.Length; i++)
-        //{
-        //    transforms[i] = cells[i].transform;
-        //}
-
-        //foreach (var item in GetMaxXOnY(transforms))
-        //{
-        //    Debug.Log(item.Key + "\t" + item.Value);
-        //}
+#if UNITY_EDITOR
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            SpawnTileRandom();
+        }
+#endif
+        
     }
+
+    public void SpawnTileRandom()
+    {
+        var randomChange = Random.Range(0f, 1f);
+        var randomCell = Random.Range(0, cells.Length);
+        if(randomChange >= 0.3f)
+        {
+            var myNewTile = Instantiate(tile, cells[randomCell].transform.position, transform.rotation);
+            myNewTile.transform.parent = gameObject.transform;
+        }
+        if(randomChange < 0.3f)
+        {
+            var myNewTile = Instantiate(tile, cells[randomCell].transform.position, transform.rotation);
+            myNewTile.transform.parent = gameObject.transform;
+            var randomCell1 = Random.Range(0, cells.Length);
+            myNewTile = Instantiate(tile, cells[randomCell].transform.position, transform.rotation);
+            myNewTile.transform.parent = gameObject.transform;
+        }
+    }
+
+
 
     //public Dictionary<int, int> GetMinYOnX(Transform[] transforms)
     //{
@@ -58,80 +79,6 @@ public class CellManager : MonoBehaviour
     //    }
         
     //    return mins;
-    //}
-
-    //public Dictionary<int, int> GetMaxYOnX(Transform[] transforms)
-    //{
-    //    Dictionary<int, int> maxs = new Dictionary<int, int>();
-
-    //    for (int i = 0; i < transforms.Length; i++)
-    //    {
-    //        var xInt = Mathf.RoundToInt(transforms[i].position.x);
-    //        var yInt = Mathf.RoundToInt(transforms[i].position.y);
-
-    //        int currentMax = 0;
-    //        if (maxs.TryGetValue(xInt, out currentMax))
-    //        {
-    //            if (yInt > currentMax)
-    //                maxs[xInt] = yInt;
-    //        }
-    //        else
-    //        {
-    //            maxs.Add(xInt, yInt);
-    //        }
-
-
-    //    }
-    //    return maxs;
-    //}
-    //public Dictionary<int, int> GetMinXOnY(Transform[] transforms)
-    //{
-    //    Dictionary<int, int> mins = new Dictionary<int, int>();
-
-    //    for (int i = 0; i < transforms.Length; i++)
-    //    {
-    //        var xInt = Mathf.RoundToInt(transforms[i].position.x);
-    //        var yInt = Mathf.RoundToInt(transforms[i].position.y);
-
-    //        int currentMax = 0;
-    //        if (mins.TryGetValue(yInt, out currentMax))
-    //        {
-    //            if (xInt <= currentMax)
-    //                mins[yInt] = xInt;
-    //        }
-    //        else
-    //        {
-    //            mins.Add(yInt, xInt);
-    //        }
-
-
-    //    }
-    //    return mins;
-    //}
-
-    //public Dictionary<int, int> GetMaxXOnY(Transform[] transforms)
-    //{
-    //    Dictionary<int, int> maxs = new Dictionary<int, int>();
-
-    //    for (int i = 0; i < transforms.Length; i++)
-    //    {
-    //        var xInt = Mathf.RoundToInt(transforms[i].position.x);
-    //        var yInt = Mathf.RoundToInt(transforms[i].position.y);
-
-    //        int currentMax = 0;
-    //        if (maxs.TryGetValue(yInt, out currentMax))
-    //        {
-    //            if (xInt > currentMax)
-    //                maxs[yInt] = xInt;
-    //        }
-    //        else
-    //        {
-    //            maxs.Add(yInt, xInt);
-    //        }
-
-
-    //    }
-    //    return maxs;
     //}
 
 }

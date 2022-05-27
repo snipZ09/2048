@@ -11,6 +11,8 @@ public class Tile : MonoBehaviour
     public LayerMask whatStopsMovement;
     bool canMove;
     public int xOffset, yOffset;
+    public int stepCanMove;
+    bool isHit;
 
 
     private void Awake()
@@ -25,49 +27,58 @@ public class Tile : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
-        if(Vector3.Distance(transform.position, movePoint.position) < 0.05f)
-        {
+
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
             {
-                if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), 0.2f, whatStopsMovement))
-                {
-                    movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
-                } 
+                canMove = true;
+            CheckNextMove("Horizontal");
             }
-            
-            
+
+
             if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
             {
-                if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Vertical"), 0f, 0f), 0.2f, whatStopsMovement))
+                if (!Physics2D.OverlapCircle(movePoint.localPosition + new Vector3(Input.GetAxisRaw("Vertical"), 0f, 0f), 0.2f, whatStopsMovement))
                 {
                     movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
-                } 
+                }
             }
-        }
-
         
+        transform.localPosition = Vector3.MoveTowards(transform.localPosition, movePoint.position, moveSpeed * Time.deltaTime);
+
+
     }
 
-    public void CheckNextMove(string direction)
+    public Transform CheckNextMove(string direction)
     {
         while (canMove)
         {
-            if(direction == "Horizontal")
+            if (direction == "Horizontal")
             {
+                Debug.Log("move Horizontal");
                 movePoint.position += new Vector3(Input.GetAxisRaw(direction) * xOffset, 0f, 0f);
-                while(Physics2D.OverlapCircle(movePoint.position, 0.2f, whatStopsMovement))
+                isHit = Physics2D.OverlapCircle(movePoint.localPosition, 0.2f, whatStopsMovement);
+                while (!isHit)
                 {
-                    movePoint.position += new Vector3(Input.GetAxisRaw(direction) * xOffset, 0f, 0f);
+                    movePoint.position += new Vector3(Input.GetAxisRaw(direction) + xOffset * stepCanMove, 0f, 0f);
+                    if(isHit)
+                    {
+                        return movePoint;
+                    }
+                    if(stepCanMove == 4)
+                    {
+                        return movePoint;
+                    }
                 }
             }
-            if(direction == "Vertical")
+            canMove = false;
+            if (direction == "Vertical")
             {
 
             }
-            
+
         }
+        return movePoint;
 
     }
 
