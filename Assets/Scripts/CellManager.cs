@@ -9,7 +9,7 @@ public class CellManager : MonoBehaviour
 
     public GameObject grid;
     public Cell[] cells;
-    public Tile tile;
+    public GameObject tileToSpawn;
 
     private void Awake()
     {
@@ -36,20 +36,22 @@ public class CellManager : MonoBehaviour
 
     public void SpawnTileRandom()
     {
+        
         var randomChange = Random.Range(0f, 1f);
         var randomCell = Random.Range(0, cells.Length);
-        if(randomChange >= 0.3f)
+        if (cells[randomCell].transform.childCount != 0)
         {
-            var myNewTile = Instantiate(tile, cells[randomCell].transform.position, transform.rotation);
-            myNewTile.transform.parent = gameObject.transform;
+            Debug.Log("Cell " + randomCell + " has tile");
+            SpawnTileRandom();
+            return;
         }
-        if(randomChange < 0.3f)
+        if(randomChange < 0.85f)
         {
-            var myNewTile = Instantiate(tile, cells[randomCell].transform.position, transform.rotation);
-            myNewTile.transform.parent = gameObject.transform;
-            var randomCell1 = Random.Range(0, cells.Length);
-            myNewTile = Instantiate(tile, cells[randomCell].transform.position, transform.rotation);
-            myNewTile.transform.parent = gameObject.transform;
+            GameObject myNewTile = Instantiate(tileToSpawn, cells[randomCell].transform);
+        }
+        else
+        {
+            GameObject myNewTile = Instantiate(tileToSpawn, cells[randomCell].transform);
         }
     }
 

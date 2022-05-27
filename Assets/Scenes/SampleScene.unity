@@ -620,7 +620,6 @@ GameObject:
   - component: {fileID: 686011570}
   - component: {fileID: 686011569}
   - component: {fileID: 686011568}
-  - component: {fileID: 686011572}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -708,37 +707,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &686011572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 686011567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0c54a161a8e5d54bbb7e31d2c9ad316, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grid: {fileID: 1940388770}
-  cells:
-  - {fileID: 4982625119811678941}
-  - {fileID: 1256628924}
-  - {fileID: 2144277786}
-  - {fileID: 2073086235}
-  - {fileID: 1445047441}
-  - {fileID: 1189236575}
-  - {fileID: 1612720051}
-  - {fileID: 1164155542}
-  - {fileID: 727881494}
-  - {fileID: 2145644408}
-  - {fileID: 1205846195}
-  - {fileID: 1991611175}
-  - {fileID: 1741994129}
-  - {fileID: 2036419943}
-  - {fileID: 157266044}
-  - {fileID: 2061819439}
-  tile: {fileID: -1631532092093519821, guid: c16dd7246af38e645bb55fdb17ac4b08, type: 3}
 --- !u!1001 &727881492
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2011,6 +1979,7 @@ GameObject:
   - component: {fileID: 1940388771}
   - component: {fileID: 1940388773}
   - component: {fileID: 1940388772}
+  - component: {fileID: 1940388774}
   m_Layer: 5
   m_Name: GamePanel
   m_TagString: Untagged
@@ -2075,6 +2044,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1940388770}
   m_CullTransparentMesh: 0
+--- !u!114 &1940388774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940388770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c54a161a8e5d54bbb7e31d2c9ad316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 1940388770}
+  cells:
+  - {fileID: 4982625119811678941}
+  - {fileID: 1256628924}
+  - {fileID: 2144277786}
+  - {fileID: 2073086235}
+  - {fileID: 1445047441}
+  - {fileID: 1189236575}
+  - {fileID: 1612720051}
+  - {fileID: 1164155542}
+  - {fileID: 727881494}
+  - {fileID: 2145644408}
+  - {fileID: 1205846195}
+  - {fileID: 1991611175}
+  - {fileID: 1741994129}
+  - {fileID: 2036419943}
+  - {fileID: 157266044}
+  - {fileID: 2061819439}
+  tileToSpawn: {fileID: 4357845334411541140, guid: c16dd7246af38e645bb55fdb17ac4b08,
+    type: 3}
 --- !u!1001 &1991611173
 PrefabInstance:
   m_ObjectHideFlags: 0
