@@ -10,7 +10,8 @@ public class CellManager : MonoBehaviour
     public GameObject grid;
     public Cell[] allCells;
     public GameObject tileToSpawn;
-    public int[,] cells = new Cell[4,4];
+    public int[,] cells = new int[4,4];
+    public float minX, maxX, minY, maxY = 0;
 
     private void Awake()
     {
@@ -20,7 +21,7 @@ public class CellManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        FindMinMaxXY();
     }
 
     // Update is called once per frame
@@ -33,6 +34,7 @@ public class CellManager : MonoBehaviour
         }
 #endif
         CheckCellEmpty();
+
     }
 
     public void SpawnTileRandom()
@@ -75,6 +77,26 @@ public class CellManager : MonoBehaviour
         return cells;
     }
 
+    public void FindMinMaxXY()
+    {
+        foreach (Cell cell in allCells)
+        {
+            bool smallX = cell.transform.position.x < minX;
+
+            bool bigX = cell.transform.position.x > maxX;
+
+            bool smallY = cell.transform.position.y < minY;
+
+            bool bigY = cell.transform.position.y > maxY;
+
+
+            minX = smallX ? cell.transform.position.x : minX;
+            maxX = bigX ? cell.transform.position.x : maxX;
+            minY = smallY ? cell.transform.position.y : minY;
+            maxY = bigY ? cell.transform.position.y : maxY;
+        }
+    }
+
 
 
 
@@ -101,7 +123,7 @@ public class CellManager : MonoBehaviour
 
 
     //    }
-        
+
     //    return mins;
     //}
 

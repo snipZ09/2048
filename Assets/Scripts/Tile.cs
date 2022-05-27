@@ -22,31 +22,26 @@ public class Tile : MonoBehaviour
 
     private void Start()
     {
-        movePoint.parent = null;
+        
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
 
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
 
-            if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
-            {
-                canMove = true;
-            CheckNextMove("Horizontal");
-            }
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
 
-
-            if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
-            {
-                if (!Physics2D.OverlapCircle(movePoint.localPosition + new Vector3(Input.GetAxisRaw("Vertical"), 0f, 0f), 0.2f, whatStopsMovement))
-                {
-                    movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
-                }
-            }
-        
-        transform.localPosition = Vector3.MoveTowards(transform.localPosition, movePoint.position, moveSpeed * Time.deltaTime);
-
-
+        }
     }
 
     public Transform CheckNextMove(string direction)
