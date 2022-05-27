@@ -10,6 +10,7 @@ public class CellManager : MonoBehaviour
     public GameObject grid;
     public Cell[] allCells;
     public GameObject tileToSpawn;
+    public int[,] cells = new Cell[4,4];
 
     private void Awake()
     {
@@ -31,7 +32,7 @@ public class CellManager : MonoBehaviour
             SpawnTileRandom();
         }
 #endif
-        
+        CheckCellEmpty();
     }
 
     public void SpawnTileRandom()
@@ -54,6 +55,27 @@ public class CellManager : MonoBehaviour
             GameObject myNewTile = Instantiate(tileToSpawn, allCells[randomCell].transform);
         }
     }
+
+    public int[,] CheckCellEmpty()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; i < 4; i++)
+            {
+                if (allCells[i + j].transform.childCount != 0)
+                {
+                    cells[i, j] = 1;
+                }
+                else
+                {
+                    cells[i, j] = 0;
+                }
+            }
+        }
+        return cells;
+    }
+
+
 
 
 
