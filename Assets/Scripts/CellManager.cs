@@ -8,7 +8,7 @@ public class CellManager : MonoBehaviour
     public static CellManager instance;
 
     public GameObject grid;
-    public Cell[] cells;
+    public Cell[] allCells;
     public GameObject tileToSpawn;
 
     private void Awake()
@@ -38,8 +38,8 @@ public class CellManager : MonoBehaviour
     {
         
         var randomChange = Random.Range(0f, 1f);
-        var randomCell = Random.Range(0, cells.Length);
-        if (cells[randomCell].transform.childCount != 0)
+        var randomCell = Random.Range(0, allCells.Length);
+        if (allCells[randomCell].transform.childCount != 0)
         {
             Debug.Log("Cell " + randomCell + " has tile");
             SpawnTileRandom();
@@ -47,11 +47,11 @@ public class CellManager : MonoBehaviour
         }
         if(randomChange < 0.85f)
         {
-            GameObject myNewTile = Instantiate(tileToSpawn, cells[randomCell].transform);
+            GameObject myNewTile = Instantiate(tileToSpawn, allCells[randomCell].transform);
         }
         else
         {
-            GameObject myNewTile = Instantiate(tileToSpawn, cells[randomCell].transform);
+            GameObject myNewTile = Instantiate(tileToSpawn, allCells[randomCell].transform);
         }
     }
 
