@@ -6,7 +6,7 @@ public class Cell : MonoBehaviour
 {
     public static Cell instance;
     public float xOffset, yOffset;
-    public LayerMask isCell;
+    public bool hasTile = false;
     
 
     private void Awake()
@@ -21,6 +21,9 @@ public class Cell : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(this.transform.childCount != 0)
+        {
+            hasTile = true;
+        }   
     }
 }

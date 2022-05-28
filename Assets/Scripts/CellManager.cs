@@ -8,10 +8,10 @@ public class CellManager : MonoBehaviour
     public static CellManager instance;
 
     public GameObject grid;
-    public Cell[] allCells;
+    public GameObject[] allCells;
     public GameObject tileToSpawn;
-    public int[,] cells = new int[4,4];
-    public float minX, maxX, minY, maxY = 0;
+    public GameObject[,] cells = new GameObject[4,4];
+    public int minX = 0, maxX = 3, minY = 0, maxY = 3;
 
     private void Awake()
     {
@@ -21,19 +21,20 @@ public class CellManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FindMinMaxXY();
     }
 
     // Update is called once per frame
     void Update()
     {
+        CheckCellEmpty();
 #if UNITY_EDITOR
         if (Input.GetKeyUp(KeyCode.R))
         {
             SpawnTileRandom();
+            //GameObject myNewTile = Instantiate(tileToSpawn, mang[1, 1].transform);
         }
 #endif
-        CheckCellEmpty();
+        
 
     }
 
@@ -58,44 +59,19 @@ public class CellManager : MonoBehaviour
         }
     }
 
-    public int[,] CheckCellEmpty()
+    public void CheckCellEmpty()
     {
+        int count = 0;
         for (int i = 0; i < 4; i++)
         {
-            for (int j = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
             {
-                if (allCells[i + j].transform.childCount != 0)
-                {
-                    cells[i, j] = 1;
-                }
-                else
-                {
-                    cells[i, j] = 0;
-                }
+                cells[i, j] = allCells[count];
+                count++;
             }
         }
-        return cells;
     }
 
-    public void FindMinMaxXY()
-    {
-        foreach (Cell cell in allCells)
-        {
-            bool smallX = cell.transform.position.x < minX;
-
-            bool bigX = cell.transform.position.x > maxX;
-
-            bool smallY = cell.transform.position.y < minY;
-
-            bool bigY = cell.transform.position.y > maxY;
-
-
-            minX = smallX ? cell.transform.position.x : minX;
-            maxX = bigX ? cell.transform.position.x : maxX;
-            minY = smallY ? cell.transform.position.y : minY;
-            maxY = bigY ? cell.transform.position.y : maxY;
-        }
-    }
 
 
 
