@@ -88,7 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff9386cce95d0714db045061c07cc92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amount: 0
+  value: 0
+  valueText: {fileID: 4357845335645127932}
   moveSpeed: 0
   whatStopsMovement:
     serializedVersion: 2
@@ -96,6 +97,9 @@ MonoBehaviour:
   xOffset: 88
   yOffset: 0
   stepCanMove: 0
+  order: 0
+  currentPos: {x: 0, y: 0}
+  tManager: {fileID: 0}
 --- !u!1 &4357845335645127934
 GameObject:
   m_ObjectHideFlags: 0
