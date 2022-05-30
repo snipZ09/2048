@@ -2058,9 +2058,9 @@ MonoBehaviour:
   tileToSpawn: {fileID: 4357845334411541140, guid: c16dd7246af38e645bb55fdb17ac4b08,
     type: 3}
   minX: 0
-  maxX: 0
+  maxX: 3
   minY: 0
-  maxY: 0
+  maxY: 3
 --- !u!1 &1974939379 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4982625118981777784, guid: 7d31abbfffd855d4f80d4d6f2fa2f780,

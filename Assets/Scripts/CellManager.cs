@@ -52,10 +52,12 @@ public class CellManager : MonoBehaviour
         if(randomChange < 0.85f)
         {
             GameObject myNewTile = Instantiate(tileToSpawn, allCells[randomCell].transform);
+            myNewTile.GetComponent<Tile>().amount = 2;
         }
         else
         {
             GameObject myNewTile = Instantiate(tileToSpawn, allCells[randomCell].transform);
+            myNewTile.GetComponent<Tile>().amount = 4;
         }
     }
 
@@ -67,6 +69,8 @@ public class CellManager : MonoBehaviour
             for (int j = 0; j < 4; j++)
             {
                 cells[i, j] = allCells[count];
+                allCells[count].GetComponent<Cell>().yIndex = i;
+                allCells[count].GetComponent<Cell>().xIndex = j;
                 count++;
             }
         }

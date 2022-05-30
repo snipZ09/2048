@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public class Tile : MonoBehaviour
 {
     public static Tile instance;
     public int amount;
+    public Text amountText;
     public float moveSpeed;
     public LayerMask whatStopsMovement;
     bool canMove;
@@ -29,79 +31,121 @@ public class Tile : MonoBehaviour
 
     private void Update()
     {
-        //float diff = transform.parent.tr - CellManager.instance.maxX;
-        var mang = CellManager.instance.allCells;
-        Vector2 abc;
-        int index = Array.IndexOf(mang, gameObject.transform.parent.gameObject);
-        Vector3 diff = transform.position;
+        //Tìm tile đang ở hàng nào
+        yOffset = gameObject.GetComponentInParent<Cell>().yIndex;
+        //Tìm tile đang ở cột nào
+        xOffset = gameObject.GetComponentInParent<Cell>().xIndex;
+
         if (Input.GetKeyDown(KeyCode.D))
         {
-            if(index < 4)
-            {
-                //CellManager.instance.cells[0, 3].GetComponent<Cell>().hasTile;
-                yMoveTo = 0;
-                MoveRight(yMoveTo);
-            }
-            else if(index < 8)
-            {
-                yMoveTo = 1;
-                MoveRight(yMoveTo);
-            }
-            else if(index < 12)
-            {
-                yMoveTo = 2;
-                MoveRight(2);
-            }
-            else if(index < 16)
-            {
-                yMoveTo = 3;
-                MoveRight(yMoveTo);
-            }
+            MoveRight(yOffset);
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-
+            MoveLeft(yOffset);
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-
+            MoveUp(xOffset);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-
+            MoveDown(xOffset);
         }
     }
 
     public void MoveRight(int row)
     {
         this.xMoveTo = CellManager.instance.maxX;
-        //while (this.transform.position != CellManager.instance.cells[row, this.xMoveTo].transform.position)
-        //{
-        //    while (CellManager.instance.cells[row, this.xMoveTo].GetComponent<Cell>().hasTile)
-        //    {
-        //        xMoveTo--;
-        //    }
-        //    if(this.transform.position == CellManager.instance.cells[row, this.xMoveTo].transform.position)
-        //    {
-        //        return;
-        //    }
 
-        //    this.transform.position = CellManager.instance.cells[row, this.xMoveTo].transform.position;
-        //    this.transform.parent = CellManager.instance.cells[row, this.xMoveTo].transform;
-        //}
-        for (this.xMoveTo = 3; xMoveTo > -1; xMoveTo--)
+        while(transform.position != CellManager.instance.cells[row, xMoveTo].transform.position)
         {
-            if(transform.position == CellManager.instance.cells[row, xMoveTo].transform.position)
+            if(CellManager.instance.cells[row, xMoveTo].GetComponent<Cell>().hasTile)
             {
-                return;
+                if (xMoveTo == CellManager.instance.minX)
+                {
+                    return;
+                }
+                xMoveTo--;  
             }
-            if(!CellManager.instance.cells[row, xMoveTo].GetComponent<Cell>().hasTile)
+            else
             {
                 transform.position = CellManager.instance.cells[row, xMoveTo].transform.position;
                 transform.parent = CellManager.instance.cells[row, xMoveTo].transform;
             }
+            
         }
     }
+
+    public void MoveLeft(int row)
+    {
+        this.xMoveTo = CellManager.instance.minX;
+
+        while (transform.position != CellManager.instance.cells[row, xMoveTo].transform.position)
+        {
+            if (CellManager.instance.cells[row, xMoveTo].GetComponent<Cell>().hasTile)
+            {
+                if (xMoveTo == CellManager.instance.maxX)
+                {
+                    return;
+                }
+                xMoveTo++;
+            }
+            else
+            {
+                transform.position = CellManager.instance.cells[row, xMoveTo].transform.position;
+                transform.parent = CellManager.instance.cells[row, xMoveTo].transform;
+            }
+
+        }
+    }
+
+    public void MoveUp(int column)
+    {
+        this.yMoveTo = CellManager.instance.minY;
+
+        while (transform.position != CellManager.instance.cells[yMoveTo, column].transform.position)
+        {
+            if (CellManager.instance.cells[yMoveTo, column].GetComponent<Cell>().hasTile)
+            {
+                if (yMoveTo == CellManager.instance.maxY)
+                {
+                    return;
+                }
+                yMoveTo++;
+            }
+            else
+            {
+                transform.position = CellManager.instance.cells[yMoveTo, column].transform.position;
+                transform.parent = CellManager.instance.cells[yMoveTo, column].transform;
+            }
+
+        }
+    }
+
+    public void MoveDown(int column)
+    {
+        this.yMoveTo = CellManager.instance.maxY;
+
+        while (transform.position != CellManager.instance.cells[yMoveTo, column].transform.position)
+        {
+            if (CellManager.instance.cells[yMoveTo, column].GetComponent<Cell>().hasTile)
+            {
+                if (yMoveTo == CellManager.instance.minY)
+                {
+                    return;
+                }
+                yMoveTo--;
+            }
+            else
+            {
+                transform.position = CellManager.instance.cells[yMoveTo, column].transform.position;
+                transform.parent = CellManager.instance.cells[yMoveTo, column].transform;
+            }
+
+        }
+    }
+
 
 
     private void OnTriggerEnter2D(Collider2D other)

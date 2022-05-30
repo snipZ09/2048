@@ -5,7 +5,7 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
     public static Cell instance;
-    public float xOffset, yOffset;
+    public int xIndex, yIndex;
     public bool hasTile = false;
     
 
@@ -16,6 +16,7 @@ public class Cell : MonoBehaviour
 
     private void Start()
     {
+        
     }
 
     // Update is called once per frame
@@ -24,6 +25,10 @@ public class Cell : MonoBehaviour
         if(this.transform.childCount != 0)
         {
             hasTile = true;
-        }   
+        }
+        else
+        {
+            hasTile = false;
+        }
     }
 }
