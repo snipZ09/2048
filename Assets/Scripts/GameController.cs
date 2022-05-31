@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     float speedLerp = 0.2f;
     public float fillNumber;
     public int score = 0;
+    
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -46,5 +48,11 @@ public class GameController : MonoBehaviour
         //value += Time.deltaTime ;
         //Debug.Log("speed Lerp: " + speedLerp);
         //fillNumber = Mathf.Lerp(0, 1, value);
+    }
+
+    public void NewGame()
+    {
+        SceneManager.LoadScene("SampleScene");
+
     }
 }

@@ -24,6 +24,7 @@ public class Tile : MonoBehaviour
     public int stepCanMove;
     int xMoveTo, yMoveTo;
 
+    public int winCondition = 64;
 
     int _value;
     public bool canMove;
@@ -230,6 +231,10 @@ public class Tile : MonoBehaviour
             else if(this.value == goInTargetCell.value)
             {
                 goInTargetCell.value += goInTargetCell.value;
+                if(goInTargetCell.value == winCondition)
+                {
+                    tManager.Check2048();
+                }
                 //tManager.tiles[(int)currentPos.x, (int)currentPos.y] = null;
                 //Destroy(this.gameObject);
                 canMove = false;
@@ -239,7 +244,7 @@ public class Tile : MonoBehaviour
             else
             {
                 canMove = false;
-
+                tManager.CheckTileLost();
                 return;
             }
         }

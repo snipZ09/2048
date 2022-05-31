@@ -17,6 +17,8 @@ public class TileManager : MonoBehaviour
 
     public int columnCount = 4;
     public int rowCount = 4;
+    public int tileLoseCount;
+
 
     private void Awake()
     {
@@ -41,9 +43,11 @@ public class TileManager : MonoBehaviour
     {
         CreatePostion();
         //Test hàm tạo tile ở vị trí vector2
-        CreateTile(new Vector2(1, 1), 2);
+        //CreateTile(new Vector2(1, 1), 2);
         //Test hàm xóa tile ở vị trí vector2
         //DeleteTile(new Vector2(1, 0));
+        SpawnTileRandom();
+        SpawnTileRandom();
 
     }
 
@@ -58,20 +62,28 @@ public class TileManager : MonoBehaviour
 #endif
         if (Input.GetKeyDown(KeyCode.D))
         {
+            tileLoseCount = 0;
             CallMoveRight();
+            SpawnTileRandom();
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
+            tileLoseCount = 0;
             CallMoveLeft();
+            SpawnTileRandom();
         }
 
         if (Input.GetKeyDown(KeyCode.W))
         {
+            tileLoseCount = 0;
             CallMoveUp();
+            SpawnTileRandom();
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
+            tileLoseCount = 0;
             CallMoveDown();
+            SpawnTileRandom();
         }
 
     }
@@ -203,5 +215,19 @@ public class TileManager : MonoBehaviour
             }
         }
         return count;
+    }
+
+    public void CheckTileLost()
+    {
+        tileLoseCount++;
+        if (TileManager.instance.tileLoseCount > 15)
+        {
+            SceneManager.LoadScene("LostScene");
+        }
+    }
+
+    public void Check2048()
+    {
+        SceneManager.LoadScene("VictoryScene");
     }
 }
