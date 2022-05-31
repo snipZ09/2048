@@ -43,8 +43,8 @@ public class TileManager : MonoBehaviour
     {
         CreatePostion();
         //Test hàm tạo tile ở vị trí vector2
-        CreateTile(new Vector2(1, 1), 2);
-        CreateTile(new Vector2(2, 1), 4);
+        CreateTile(new Vector2(0, 1), 2);
+        CreateTile(new Vector2(1, 1), 4);
         //Test hàm xóa tile ở vị trí vector2
         //DeleteTile(new Vector2(1, 0));
         //SpawnTileRandom();
