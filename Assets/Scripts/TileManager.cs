@@ -30,8 +30,8 @@ public class TileManager : MonoBehaviour
         {
             int firstDimensionIndex = i / 4;
             int secondDimensionIndex = i % columnCount;
-
-            // Debug.Log("secondDimensionIndex:" + secondDimensionIndex);
+            //Debug.Log("secondDimensionIndex:" + secondDimensionIndex);
+            
             positions[firstDimensionIndex, secondDimensionIndex] = allCells[i].transform.localPosition;
         }
     }
@@ -41,7 +41,7 @@ public class TileManager : MonoBehaviour
     {
         CreatePostion();
         //Test hàm tạo tile ở vị trí vector2
-        CreateTile(new Vector2(1, 1));
+        CreateTile(new Vector2(1, 1), 2);
         //Test hàm xóa tile ở vị trí vector2
         //DeleteTile(new Vector2(1, 0));
 
@@ -55,7 +55,6 @@ public class TileManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.R))
         {
             SpawnTileRandom();
-            //GameObject myNewTile = Instantiate(tileToSpawn, mang[1, 1].transform);
         }
 #endif
         if (Input.GetKeyDown(KeyCode.D))
@@ -89,6 +88,7 @@ public class TileManager : MonoBehaviour
                 {
                     Debug.Log("call move right: " + i + "||" + j);
                     tile.MoveRight();
+                    
                 }
             }
         }
@@ -144,27 +144,28 @@ public class TileManager : MonoBehaviour
 
     public void SpawnTileRandom()
     {
-
         var randomChange = Random.Range(0f, 1f);
-        var randomCell = Random.Range(0, allCells.Length);
-        if (allCells[randomCell].transform.childCount != 0)
+        int randomColumn = Mathf.RoundToInt(Random.Range(0, 4));
+        int randomRow = Mathf.RoundToInt(Random.Range(0, 4));
+        if (tiles[randomColumn, randomRow] != null)
         {
-            Debug.Log("Cell " + randomCell + " has tile");
+            Debug.Log("Cell " + randomColumn + " - " + randomRow + " has tile");
             SpawnTileRandom();
             return;
         }
-        Tile myNewTile = Instantiate(tilePrefab, transform);
+        int randomValue;
         if (randomChange < 0.85f)
         {
-            myNewTile.value = 2;
+            randomValue = 2;
         }
         else
         {
-            myNewTile.value = 4;
+            randomValue = 4;
         }
+        CreateTile(new Vector2(randomColumn, randomRow), randomValue);
     }
 
-    public void CreateTile(Vector2 pos)
+    public void CreateTile(Vector2 pos, int value)
     {
         //int count = CountIndex(pos);
         Tile myNewTile = Instantiate(tilePrefab, transform);
@@ -172,16 +173,16 @@ public class TileManager : MonoBehaviour
         myNewTile.transform.localPosition = positions[(int)pos.x, (int)pos.y];
         myNewTile.tManager = this;
         myNewTile.currentPos = pos;
-        myNewTile.value = 2;
+        myNewTile.value = value;
         tiles[(int)pos.x, (int)pos.y] = myNewTile;
     }
 
     public void DeleteTile(Vector2 pos)
     {
         int count = CountIndex(pos);
-        Debug.Log("Đã xóa tile ở vị trí x: " + pos.x + " y: " + pos.y);
-        Destroy(allTiles[count].gameObject);
-        allTiles[count] = null;
+        Debug.Log("Đã xóa tile ở vị trí x: " + pos.x + " y: " + pos.y + " index: " + count);        
+        Destroy(tiles[(int)pos.x, (int)pos.y].gameObject);
+        tiles[(int)pos.x, (int)pos.y] = null;
     }
 
     public int CountIndex(Vector2 pos)

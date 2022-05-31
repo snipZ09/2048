@@ -9,10 +9,12 @@ public class Tile : MonoBehaviour
     public static Tile instance;
     public int value
     {
+        get => _value;
         set
         {
             valueText.text = value.ToString();
             Debug.Log("value:" + value);
+            _value = value;
         }
     }
     public Text valueText;
@@ -21,7 +23,10 @@ public class Tile : MonoBehaviour
     public int xOffset, yOffset;
     public int stepCanMove;
     int xMoveTo, yMoveTo;
-    public int order;
+
+
+    int _value;
+    public bool canMove;
 
     public Vector2 currentPos;
     public TileManager tManager;
@@ -54,7 +59,10 @@ public class Tile : MonoBehaviour
     {
         instance = this;
     }
-
+    private void Start()
+    {
+        canMove = true;
+    }
 
 
     private void Update()
@@ -121,11 +129,10 @@ public class Tile : MonoBehaviour
         if (newPos.x == -1 || newPos.y == -1 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
         {
             Debug.Log("loi logic tim vi tri moi");
+            canMove = false;
             return;
         }
         ProcessMove(newPos);
-
-
     }
     public void MoveUp()
     {
@@ -134,7 +141,7 @@ public class Tile : MonoBehaviour
         Debug.Log("new pos:" + newPos);
         Debug.Log("currentPos:" + currentPos);
         //neu vi tri moi nam ngoai mang thi bo qua
-        if (newPos.x == -1 || newPos.y == -1 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
+        if (newPos.x < 0 || newPos.y < 0 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
         {
             Debug.Log("loi logic tim vi tri moi");
             return;
@@ -150,7 +157,7 @@ public class Tile : MonoBehaviour
         Debug.Log("new pos:" + newPos);
         Debug.Log("currentPos:" + currentPos);
         //neu vi tri moi nam ngoai mang thi bo qua
-        if (newPos.x == -1 || newPos.y == -1 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
+        if (newPos.x < 0   || newPos.y < 0 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
         {
             Debug.Log("loi logic tim vi tri moi");
             return;
@@ -192,6 +199,7 @@ public class Tile : MonoBehaviour
         Tile goInTargetCell = tManager.tiles[(int)newPos.x, (int)newPos.y];
         if (goInTargetCell == null)
         {
+            //nếu vị trí newPos không có tile thì di chuyển vô đó và vị trí cũ ở trong mảng 2 chiều biến thành null
             Debug.Log("goInTargetCell ==null");
 
             tManager.tiles[(int)newPos.x, (int)newPos.y] = this;
@@ -200,8 +208,26 @@ public class Tile : MonoBehaviour
         }
         else
         {
+            //nếu vị trí newPos có tile
             Debug.Log("goInTargetCell !=null");
             //TODO: i am here
+            //kiểm tra goInTargetCell có phải chính bản thân nó không
+            if(this.gameObject == goInTargetCell.gameObject)
+            {
+                Debug.Log("Đụng chính mình bỏ qua");
+            }
+            //kiểm tra có bằng value của goInTargetCell không
+            else if(this.value == goInTargetCell.value)
+            {
+                goInTargetCell.value += goInTargetCell.value;
+                //tManager.tiles[(int)currentPos.x, (int)currentPos.y] = null;
+                //Destroy(this.gameObject);
+                tManager.DeleteTile(this.currentPos);
+            }
+            else
+            {
+                return;
+            }
         }
         currentPos = newPos;
     }
