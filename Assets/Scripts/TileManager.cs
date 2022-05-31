@@ -43,11 +43,12 @@ public class TileManager : MonoBehaviour
     {
         CreatePostion();
         //Test hàm tạo tile ở vị trí vector2
-        //CreateTile(new Vector2(1, 1), 2);
+        CreateTile(new Vector2(1, 1), 2);
+        CreateTile(new Vector2(2, 1), 4);
         //Test hàm xóa tile ở vị trí vector2
         //DeleteTile(new Vector2(1, 0));
-        SpawnTileRandom();
-        SpawnTileRandom();
+        //SpawnTileRandom();
+        //SpawnTileRandom();
 
     }
 
@@ -133,7 +134,7 @@ public class TileManager : MonoBehaviour
                 if (tile != null)
                 {
                     tile.canMove = true;
-                    Debug.Log("call move left");
+                    //Debug.Log("call move up");
                     tile.MoveUp();
                 }
             }
@@ -150,7 +151,7 @@ public class TileManager : MonoBehaviour
                 if (tile != null)
                 {
                     tile.canMove = true;
-                    Debug.Log("call move left");
+                    Debug.Log("call move down");
                     tile.MoveDown();
                 }
             }

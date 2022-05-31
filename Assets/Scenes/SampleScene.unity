@@ -523,7 +523,6 @@ MonoBehaviour:
   columnCount: 4
   rowCount: 4
   tileLoseCount: 0
-  uiController: {fileID: 686011572}
 --- !u!1 &373529073
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,12 +875,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreValueText: {fileID: 320501997}
-  victoryPanel: {fileID: 0}
-  anyKeyText: {fileID: 0}
-  ping: {fileID: 0}
-  waitForAnyKey: 2
-  loadScene: SampleScene
-  startCount: 0
 --- !u!1001 &727881492
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2400,12 +2393,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1004604682}
-        m_MethodName: 
+      - m_Target: {fileID: 1004604684}
+        m_MethodName: NewGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

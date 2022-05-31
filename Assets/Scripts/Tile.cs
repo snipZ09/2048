@@ -143,8 +143,8 @@ public class Tile : MonoBehaviour
     }
     public void MoveUp()
     {
-        while (canMove)
-        {
+        //while (canMove)
+        //{
             Debug.Log("Move up");
             Vector2 newPos = GetNewPos(1);
             Debug.Log("new pos:" + newPos);
@@ -156,12 +156,12 @@ public class Tile : MonoBehaviour
                 return;
             }
             ProcessMove(newPos);
-        }
+        //}
     }
     public void MoveDown()
     {
-        while (canMove)
-        {
+        //while (canMove)
+        //{
             Debug.Log("Move up");
             Vector2 newPos = GetNewPos(2);
             Debug.Log("new pos:" + newPos);
@@ -173,7 +173,7 @@ public class Tile : MonoBehaviour
                 return;
             }
             ProcessMove(newPos);
-        }
+        //}
     }
     //1: up 2:down 3:left 4:right
     private Vector2 GetNewPos(int direction)
@@ -184,6 +184,32 @@ public class Tile : MonoBehaviour
             case 1:
                 newPos.y = currentPos.y;
                 newPos.x = currentPos.x - 1 < 0 ? 0 : currentPos.x - 1;
+                Tile tile;
+                float highestNewPos = newPos.x;
+                for (int i = 0; i < tManager.rowCount; i++)
+                {
+                    tile = tManager.tiles[(int)newPos.x, (int)newPos.y];
+                    if(tile == null)
+                    {
+                        highestNewPos = newPos.x;
+                        newPos.x = newPos.x - 1 < 0 ? 0 : newPos.x - 1;
+                    }
+                    else
+                    {
+                        
+                        if (this.value != tile.value)
+                        {
+                            Debug.Log("Chạy được nè this.value != tile.value" + this.currentPos.x + " - " + this.currentPos.y);
+                            newPos.x = highestNewPos + 1;
+                            
+                        }
+                        else
+                        {
+                            Debug.Log("Chạy được nè this.value == tile.value" + this.currentPos.x + " - " + this.currentPos.y);
+                            newPos.x = tile.currentPos.x;
+                        }
+                    }
+                }
                 return newPos;
 
             case 2:

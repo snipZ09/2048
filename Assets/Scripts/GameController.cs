@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController instance;
     public float value;
-    float speedLerp = 0.2f;
+    //float speedLerp = 0.2f;
     public float fillNumber;
     public int score = 0;
     
