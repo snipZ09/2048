@@ -105,66 +105,74 @@ public class Tile : MonoBehaviour
 
     public void MoveLeft()
     {
-        Debug.Log("Move left");
-        Vector2 newPos = GetNewPos(3);
-        Debug.Log("new pos:" + newPos);
-        Debug.Log("currentPos:" + currentPos);
-        //neu vi tri moi nam ngoai mang thi bo qua
-        if (newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
+        while (canMove)
         {
-            Debug.Log("loi logic tim vi tri moi");
-            return;
-        }
+            Debug.Log("Move left");
+            Vector2 newPos = GetNewPos(3);
+            Debug.Log("new pos:" + newPos);
+            Debug.Log("currentPos:" + currentPos);
+            //neu vi tri moi nam ngoai mang thi bo qua
+            if (newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
+            {
+                Debug.Log("loi logic tim vi tri moi");
+                return;
+            }
 
-        ProcessMove(newPos);
+            ProcessMove(newPos);
+        }
     }
 
     public void MoveRight()
     {
-        Debug.Log("Move right");
-        Vector2 newPos = GetNewPos(4);
-        Debug.Log("new pos:" + newPos);
-        Debug.Log("currentPos:" + currentPos);
-        //neu vi tri moi nam ngoai mang thi bo qua
-        if (newPos.x == -1 || newPos.y == -1 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
+        while (canMove)
         {
-            Debug.Log("loi logic tim vi tri moi");
-            canMove = false;
-            return;
+            Debug.Log("Move right");
+            Vector2 newPos = GetNewPos(4);
+            Debug.Log("new pos:" + newPos);
+            Debug.Log("currentPos:" + currentPos);
+            //neu vi tri moi nam ngoai mang thi bo qua
+            if (newPos.x == -1 || newPos.y == -1 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
+            {
+                Debug.Log("loi logic tim vi tri moi");
+                canMove = false;
+                return;
+            }
+            ProcessMove(newPos);
         }
-        ProcessMove(newPos);
     }
     public void MoveUp()
     {
-        Debug.Log("Move up");
-        Vector2 newPos = GetNewPos(1);
-        Debug.Log("new pos:" + newPos);
-        Debug.Log("currentPos:" + currentPos);
-        //neu vi tri moi nam ngoai mang thi bo qua
-        if (newPos.x < 0 || newPos.y < 0 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
+        while (canMove)
         {
-            Debug.Log("loi logic tim vi tri moi");
-            return;
+            Debug.Log("Move up");
+            Vector2 newPos = GetNewPos(1);
+            Debug.Log("new pos:" + newPos);
+            Debug.Log("currentPos:" + currentPos);
+            //neu vi tri moi nam ngoai mang thi bo qua
+            if (newPos.x < 0 || newPos.y < 0 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
+            {
+                Debug.Log("loi logic tim vi tri moi");
+                return;
+            }
+            ProcessMove(newPos);
         }
-        ProcessMove(newPos);
-
-
     }
     public void MoveDown()
     {
-        Debug.Log("Move up");
-        Vector2 newPos = GetNewPos(2);
-        Debug.Log("new pos:" + newPos);
-        Debug.Log("currentPos:" + currentPos);
-        //neu vi tri moi nam ngoai mang thi bo qua
-        if (newPos.x < 0   || newPos.y < 0 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
+        while (canMove)
         {
-            Debug.Log("loi logic tim vi tri moi");
-            return;
+            Debug.Log("Move up");
+            Vector2 newPos = GetNewPos(2);
+            Debug.Log("new pos:" + newPos);
+            Debug.Log("currentPos:" + currentPos);
+            //neu vi tri moi nam ngoai mang thi bo qua
+            if (newPos.x < 0 || newPos.y < 0 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
+            {
+                Debug.Log("loi logic tim vi tri moi");
+                return;
+            }
+            ProcessMove(newPos);
         }
-        ProcessMove(newPos);
-
-
     }
     //1: up 2:down 3:left 4:right
     private Vector2 GetNewPos(int direction)
@@ -215,6 +223,8 @@ public class Tile : MonoBehaviour
             if(this.gameObject == goInTargetCell.gameObject)
             {
                 Debug.Log("Đụng chính mình bỏ qua");
+                canMove = false;
+
             }
             //kiểm tra có bằng value của goInTargetCell không
             else if(this.value == goInTargetCell.value)
@@ -222,10 +232,14 @@ public class Tile : MonoBehaviour
                 goInTargetCell.value += goInTargetCell.value;
                 //tManager.tiles[(int)currentPos.x, (int)currentPos.y] = null;
                 //Destroy(this.gameObject);
+                canMove = false;
+                GameController.instance.score += 1;
                 tManager.DeleteTile(this.currentPos);
             }
             else
             {
+                canMove = false;
+
                 return;
             }
         }

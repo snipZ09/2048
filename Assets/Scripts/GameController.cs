@@ -1,21 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    public static GameController instance;
     public float value;
     float speedLerp = 0.2f;
     public float fillNumber;
+    public int score = 0;
+
+    private void Awake()
+    {
+        instance = this;    
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         //for(int i = 0; i < fillNumber; i++)
         //{
         //    if(fillNumber < 0.2f)

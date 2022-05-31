@@ -50,7 +50,6 @@ public class TileManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AddIndexToCell();
 #if UNITY_EDITOR
         if (Input.GetKeyUp(KeyCode.R))
         {
@@ -86,6 +85,7 @@ public class TileManager : MonoBehaviour
                 Tile tile = tiles[i, j];
                 if (tile != null)
                 {
+                    tile.canMove = true;
                     Debug.Log("call move right: " + i + "||" + j);
                     tile.MoveRight();
                     
@@ -103,6 +103,7 @@ public class TileManager : MonoBehaviour
                 Tile tile = tiles[i, j];
                 if (tile != null)
                 {
+                    tile.canMove = true;
                     Debug.Log("call move left");
                     tile.MoveLeft();
                 }
@@ -119,6 +120,7 @@ public class TileManager : MonoBehaviour
                 Tile tile = tiles[i, j];
                 if (tile != null)
                 {
+                    tile.canMove = true;
                     Debug.Log("call move left");
                     tile.MoveUp();
                 }
@@ -135,6 +137,7 @@ public class TileManager : MonoBehaviour
                 Tile tile = tiles[i, j];
                 if (tile != null)
                 {
+                    tile.canMove = true;
                     Debug.Log("call move left");
                     tile.MoveDown();
                 }
@@ -200,44 +203,5 @@ public class TileManager : MonoBehaviour
             }
         }
         return count;
-    }
-
-    public void AddIndexToCell()
-    {
-        int count = 0;
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                allCells[count].yIndex = i;
-                allCells[count].xIndex = j;
-                count++;
-            }
-        }
-    }
-
-    public void CheckRow(int row, int direction)
-    {
-        int count = 0;
-        int i = (direction > 0) ? maxX : minX;
-        int condition = (direction > 0) ? minX : maxX;
-
-        while (count < 4)
-        {
-            if (tiles[row, i].transform.childCount != 0)
-            {
-                tiles[row, i].GetComponentInChildren<Tile>().MoveRight(row);
-            }
-            count++;
-
-            i = i > condition ? i-- : i++;
-        }
-
-    }
-
-    public void Combine(Tile a, Tile b)
-    {
-        //GameObject myNewTile = Instantiate(tileToSpawn, a.transform);
-        //myNewTile.GetComponent<Tile>().value = a.value * 2;
     }
 }
