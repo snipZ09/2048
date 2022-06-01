@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class TileManager : MonoBehaviour
 {
@@ -187,6 +188,7 @@ public class TileManager : MonoBehaviour
         Tile myNewTile = Instantiate(tilePrefab, transform);
         //allTiles[count] = myNewTile;
         myNewTile.transform.localPosition = positions[(int)pos.x, (int)pos.y];
+        myNewTile.transform.DOScale(1f, 0.2f);
         myNewTile.tManager = this;
         myNewTile.currentPos = pos;
         myNewTile.value = value;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using DG.Tweening;
 
 public class Tile : MonoBehaviour
 {
@@ -273,7 +274,8 @@ public class Tile : MonoBehaviour
 
             tManager.tiles[(int)newPos.x, (int)newPos.y] = this;
             tManager.tiles[(int)currentPos.x, (int)currentPos.y] = null;
-            transform.localPosition = tManager.positions[(int)newPos.x, (int)newPos.y];
+            //transform.localPosition = tManager.positions[(int)newPos.x, (int)newPos.y];
+            transform.DOLocalMove(tManager.positions[(int)newPos.x, (int)newPos.y], 0.2f);
         }
         else
         {
@@ -289,16 +291,17 @@ public class Tile : MonoBehaviour
             //kiểm tra có bằng value của goInTargetCell không
             else if(this.value == goInTargetCell.value)
             {
-                goInTargetCell.value += goInTargetCell.value;
+                transform.DOLocalMove(tManager.positions[(int)goInTargetCell.currentPos.x, (int)goInTargetCell.currentPos.y], 0.2f);
+                this.value += this.value;
                 if(goInTargetCell.value == winCondition)
                 {
                     tManager.Check2048();
                 }
-                //tManager.tiles[(int)currentPos.x, (int)currentPos.y] = null;
-                //Destroy(this.gameObject);
-                canMove = false;
                 GameController.instance.score += 1;
-                tManager.DeleteTile(this.currentPos);
+                tManager.tiles[(int)this.currentPos.x, (int)this.currentPos.y] = null;
+                this.currentPos = goInTargetCell.currentPos;
+                tManager.DeleteTile(goInTargetCell.currentPos);
+                tManager.tiles[(int)this.currentPos.x, (int)this.currentPos.y] = this;
             }
             else
             {
