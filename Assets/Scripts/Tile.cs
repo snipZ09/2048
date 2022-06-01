@@ -106,8 +106,6 @@ public class Tile : MonoBehaviour
 
     public void MoveLeft()
     {
-        while (canMove)
-        {
             Debug.Log("Move left");
             Vector2 newPos = GetNewPos(3);
             Debug.Log("new pos:" + newPos);
@@ -120,13 +118,10 @@ public class Tile : MonoBehaviour
             }
 
             ProcessMove(newPos);
-        }
     }
 
     public void MoveRight()
     {
-        while (canMove)
-        {
             Debug.Log("Move right");
             Vector2 newPos = GetNewPos(4);
             //Debug.Log("new pos:" + newPos);
@@ -139,7 +134,6 @@ public class Tile : MonoBehaviour
                 return;
             }
             ProcessMove(newPos);
-        }
     }
     public void MoveUp()
     {
@@ -147,8 +141,6 @@ public class Tile : MonoBehaviour
         //{
             Debug.Log("Move up");
             Vector2 newPos = GetNewPos(1);
-            Debug.Log("new pos:" + newPos);
-            Debug.Log("currentPos:" + currentPos);
             //neu vi tri moi nam ngoai mang thi bo qua
             if (newPos.x < 0 || newPos.y < 0 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
             {
@@ -164,8 +156,6 @@ public class Tile : MonoBehaviour
         //{
             Debug.Log("Move down");
             Vector2 newPos = GetNewPos(2);
-            Debug.Log("new pos:" + newPos);
-            Debug.Log("currentPos:" + currentPos);
             //neu vi tri moi nam ngoai mang thi bo qua
             if (newPos.x < 0 || newPos.y < 0 || newPos.x >= TileManager.instance.tiles.GetLength(0) || newPos.y >= TileManager.instance.tiles.GetLength(1))
             {
@@ -191,81 +181,82 @@ public class Tile : MonoBehaviour
                     tile = tManager.tiles[(int)newPos.x, (int)newPos.y];
                     if(tile == null)
                     {
+                        //nếu tile ở vị trí [0,curentPos.y] null thì trả về newPos 
+                        if (newPos.x == 0)
+                            return newPos;
                         highestNewPos = newPos.x;
                         newPos.x = newPos.x - 1 < 0 ? 0 : newPos.x - 1;
                     }
                     else
                     {
-                        
-                        if (this.value != tile.value)
-                        {
-                            Debug.Log("Chạy được nè this.value != tile.value" + this.currentPos.x + " - " + this.currentPos.y);
-                            
-                            newPos.x = highestNewPos;
-                            Debug.Log("new pos:" + newPos);
-                            Debug.Log("currentPos:" + currentPos);
-                            return newPos;
-                        }
-                        else
-                        {
-                            Debug.Log("Chạy được nè this.value == tile.value" + this.currentPos.x + " - " + this.currentPos.y);
-                            newPos.x = tile.currentPos.x;
-                        }
+                        return new Vector2(newPos.x = (this.value == tile.value) ? newPos.x : highestNewPos, newPos.y);
                     }
                 }
                 return newPos;
 
+
             case 2:
                 newPos.y = currentPos.y;
-                newPos.x = currentPos.x + 1 > tManager.rowCount ? tManager.rowCount - 1 : currentPos.x + 1;
+                newPos.x = currentPos.x + 1 >= tManager.rowCount ? tManager.rowCount - 1 : currentPos.x + 1;
                 float lowestNewPos = newPos.x;
                 for (int i = 0; i < tManager.rowCount; i++)
                 {
                     tile = tManager.tiles[(int)newPos.x, (int)newPos.y];
-                    if (newPos.x < 0 || newPos.y < 0 || newPos.x + 1 >= TileManager.instance.tiles.GetLength(0) || newPos.y + 1 >= TileManager.instance.tiles.GetLength(1))
-                    {
-                        Debug.Log("loi logic tim vi tri moi");
-                        return newPos;
-                    }
                     if (tile == null)
                     {
-
-                        Debug.Log("Chạy được nè tile == null " + this.currentPos.x + " - " + this.currentPos.y);
-                        
+                        //nếu tile ở vị trí [0,curentPos.y] null thì trả về newPos 
+                        if (newPos.x == tManager.rowCount - 1)
+                            return newPos;
                         lowestNewPos = newPos.x;
-                        
-                        newPos.x = (((newPos.x + 1) >= tManager.rowCount) ? (tManager.rowCount - 1) : (newPos.x + 1));
-                        Debug.Log("new pos:" + newPos);
-                        Debug.Log("currentPos:" + currentPos);
-
-                        
+                        newPos.x = newPos.x + 1 >= tManager.rowCount ? tManager.rowCount - 1 : newPos.x + 1;
                     }
                     else
                     {
-
-                        if (this.value != tile.value)
-                        {
-                            Debug.Log("Chạy được nè this.value != tile.value " + this.currentPos.x + " - " + this.currentPos.y);
-
-                            newPos.x = lowestNewPos;
-                            
-                            return newPos;
-                        }
-                        else
-                        {
-                            Debug.Log("Chạy được nè this.value == tile.value " + this.currentPos.x + " - " + this.currentPos.y);
-                            newPos.x = tile.currentPos.x;
-                        }
+                        return new Vector2(newPos.x = (this.value == tile.value) ? newPos.x : lowestNewPos, newPos.y);
                     }
                 }
                 return newPos;
             case 3:
                 newPos.x = currentPos.x;
                 newPos.y = currentPos.y - 1 < 0 ? 0 : currentPos.y - 1;
+                for (int i = 0; i < tManager.rowCount; i++)
+                {
+                    tile = tManager.tiles[(int)newPos.x, (int)newPos.y];
+                    if (tile == null)
+                    {
+                        //nếu tile ở vị trí [0,curentPos.y] null thì trả về newPos 
+                        if (newPos.y == 0)
+                            return newPos;
+                        highestNewPos = newPos.y;
+                        newPos.y = newPos.y - 1 < 0 ? 0 : newPos.y - 1;
+                    }
+                    else
+                    {
+                        return new Vector2(newPos.x, newPos.y = (this.value == tile.value) ? newPos.y : highestNewPos);
+                    }
+                }
                 return newPos;
             case 4:
                 newPos.x = currentPos.x;
-                newPos.y = currentPos.y + 1 > tManager.columnCount ? tManager.columnCount : currentPos.y + 1;
+                newPos.y = currentPos.y + 1 >= tManager.columnCount ? tManager.columnCount - 1 : currentPos.y + 1;
+                for (int i = 0; i < tManager.rowCount; i++)
+                {
+                    Debug.Log("new pos:" + newPos);
+                    Debug.Log("currentPos:" + currentPos);
+                    tile = tManager.tiles[(int)newPos.x, (int)newPos.y];
+                    if (tile == null)
+                    {
+                        //nếu tile ở vị trí [0,curentPos.y] null thì trả về newPos 
+                        if (newPos.y == tManager.columnCount - 1)
+                            return newPos;
+                        highestNewPos = newPos.y;
+                        newPos.y = newPos.y + 1 >= tManager.columnCount ? tManager.columnCount - 1 : newPos.y + 1;
+                    }
+                    else
+                    {
+                        return new Vector2(newPos.x, newPos.y = (this.value == tile.value) ? newPos.y : highestNewPos);
+                    }
+                }
                 return newPos;
 
             default:
@@ -294,7 +285,6 @@ public class Tile : MonoBehaviour
             {
                 Debug.Log("Đụng chính mình bỏ qua");
                 canMove = false;
-
             }
             //kiểm tra có bằng value của goInTargetCell không
             else if(this.value == goInTargetCell.value)
