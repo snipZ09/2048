@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   valueText: {fileID: 4357845335645127932}
+  skin: {fileID: 4357845334411541146}
   moveSpeed: 0
   whatStopsMovement:
     serializedVersion: 2
@@ -96,7 +97,19 @@ MonoBehaviour:
   xOffset: 88
   yOffset: 0
   stepCanMove: 0
-  winCondition: 64
+  tileColor:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0.9213733, b: 0.8254717, a: 1}
+  - {r: 1, g: 0.812583, b: 0.5707547, a: 1}
+  - {r: 1, g: 0.77062, b: 0.4764151, a: 1}
+  - {r: 1, g: 0.70395666, b: 0.3160377, a: 1}
+  - {r: 1, g: 0.56896555, b: 0, a: 1}
+  - {r: 1, g: 0.37601465, b: 0, a: 1}
+  - {r: 0.11532295, g: 1, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0.9687028, a: 1}
+  - {r: 0, g: 0.42147017, b: 1, a: 1}
+  - {r: 0.89887714, g: 0, b: 1, a: 1}
+  winCondition: 2048
   canMove: 0
   currentPos: {x: 0, y: 0}
   tManager: {fileID: 0}

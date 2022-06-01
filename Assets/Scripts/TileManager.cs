@@ -198,7 +198,8 @@ public class TileManager : MonoBehaviour
     public void DeleteTile(Vector2 pos)
     {
         int count = CountIndex(pos);
-        Debug.Log("Đã xóa tile ở vị trí x: " + pos.x + " y: " + pos.y + " index: " + count);        
+        Debug.Log("Đã xóa tile ở vị trí x: " + pos.x + " y: " + pos.y + " index: " + count);
+        tiles[(int)pos.x, (int)pos.y].transform.DOKill();
         Destroy(tiles[(int)pos.x, (int)pos.y].gameObject);
         tiles[(int)pos.x, (int)pos.y] = null;
     }
@@ -222,15 +223,18 @@ public class TileManager : MonoBehaviour
 
     public void CheckTileLost()
     {
+        
         tileLoseCount++;
         if (TileManager.instance.tileLoseCount > 15)
         {
+            DOTween.KillAll();
             SceneManager.LoadScene("LostScene");
         }
     }
 
     public void Check2048()
     {
+        DOTween.KillAll();
         SceneManager.LoadScene("VictoryScene");
     }
 }

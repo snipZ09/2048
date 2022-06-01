@@ -19,11 +19,14 @@ public class Tile : MonoBehaviour
         }
     }
     public Text valueText;
+    public Image skin;
     public float moveSpeed;
     public LayerMask whatStopsMovement;
     public int xOffset, yOffset;
     public int stepCanMove;
     int xMoveTo, yMoveTo;
+
+    public Color[] tileColor = new Color[11];
 
     public int winCondition = 64;
 
@@ -64,6 +67,7 @@ public class Tile : MonoBehaviour
     private void Start()
     {
         canMove = true;
+        ChangeColor();
     }
 
 
@@ -293,7 +297,8 @@ public class Tile : MonoBehaviour
             {
                 transform.DOLocalMove(tManager.positions[(int)goInTargetCell.currentPos.x, (int)goInTargetCell.currentPos.y], 0.2f);
                 this.value += this.value;
-                if(goInTargetCell.value == winCondition)
+                ChangeColor();
+                if (this.value == winCondition)
                 {
                     tManager.Check2048();
                 }
@@ -362,7 +367,18 @@ public class Tile : MonoBehaviour
     }
 
 
-
+    public void ChangeColor()
+    {
+        int diff = this.value;
+        int count = 0;
+        while((diff % 2) == 0)
+        {
+            diff = diff / 2;
+            count++;
+        }
+        this.skin.color = tileColor[count -1];
+        //this.skin.color = Color.red;
+    }
 
 
 }
