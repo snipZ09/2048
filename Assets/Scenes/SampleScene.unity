@@ -523,7 +523,7 @@ MonoBehaviour:
   columnCount: 4
   rowCount: 4
   tileLoseCount: 0
-  gManager: {fileID: 0}
+  gManager: {fileID: 363495556}
 --- !u!1 &363495555
 GameObject:
   m_ObjectHideFlags: 0

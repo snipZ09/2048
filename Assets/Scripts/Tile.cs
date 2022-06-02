@@ -87,27 +87,6 @@ public class Tile : MonoBehaviour
         //valueText.text = "" + value;
     }
 
-    public void MoveRight(int row)
-    {
-        this.xMoveTo = TileManager.instance.maxX;
-        //Di chuyển nhưng chưa có nhập lại được
-        while (transform.position != TileManager.instance.tiles[row, xMoveTo].transform.position)
-        {
-            if (TileManager.instance.tiles[row, xMoveTo].GetComponent<Cell>().hasTile)
-            {
-                if (xMoveTo == TileManager.instance.minX)
-                {
-                    return;
-                }
-                xMoveTo--;
-            }
-            else
-            {
-                transform.position = TileManager.instance.tiles[row, xMoveTo].transform.position;
-                transform.parent = TileManager.instance.tiles[row, xMoveTo].transform;
-            }
-        }
-    }
 
     public void MoveLeft()
     {
@@ -316,54 +295,6 @@ public class Tile : MonoBehaviour
             }
         }
         currentPos = newPos;
-    }
-
-
-
-    public void MoveUp(int column)
-    {
-        this.yMoveTo = TileManager.instance.minY;
-
-        while (transform.position != TileManager.instance.tiles[yMoveTo, column].transform.position)
-        {
-            if (TileManager.instance.tiles[yMoveTo, column].GetComponent<Cell>().hasTile)
-            {
-                if (yMoveTo == TileManager.instance.maxY)
-                {
-                    return;
-                }
-                yMoveTo++;
-            }
-            else
-            {
-                transform.position = TileManager.instance.tiles[yMoveTo, column].transform.position;
-                transform.parent = TileManager.instance.tiles[yMoveTo, column].transform;
-            }
-
-        }
-    }
-
-    public void MoveDown(int column)
-    {
-        this.yMoveTo = TileManager.instance.maxY;
-
-        while (transform.position != TileManager.instance.tiles[yMoveTo, column].transform.position)
-        {
-            if (TileManager.instance.tiles[yMoveTo, column].GetComponent<Cell>().hasTile)
-            {
-                if (yMoveTo == TileManager.instance.minY)
-                {
-                    return;
-                }
-                yMoveTo--;
-            }
-            else
-            {
-                transform.position = TileManager.instance.tiles[yMoveTo, column].transform.position;
-                transform.parent = TileManager.instance.tiles[yMoveTo, column].transform;
-            }
-
-        }
     }
 
 

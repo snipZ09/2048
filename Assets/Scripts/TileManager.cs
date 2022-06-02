@@ -35,14 +35,21 @@ public class TileManager : MonoBehaviour
         {
             for (int j = 0; j < gManager.height; j++)
             {
-                var cell = gManager.GetCellAtPosition(new Vector2(i, j));
-                if (!cell)
+                try
                 {
-                    Debug.Log("Lỗi thêm position của cell");
-                    return;
+                    Cell cell = gManager.GetCellAtPosition(new Vector2(i, j));
                 }
-                positions[i, j] = cell.transform.position;
-                Debug.Log("positions[" + i + ", " + j + "] = " + cell.transform.position);
+                catch (MissingReferenceException e)
+                {
+                    Debug.Log(e.Message);
+                }
+                //if (!cell)
+                //{
+                //    Debug.Log("Lỗi thêm position của cell");
+                //    return;
+                //}
+                //positions[i, j] = cell.transform.position;
+                //Debug.Log("positions[" + i + ", " + j + "] = " + cell.transform.position);
             }
         }       
     }
@@ -56,45 +63,45 @@ public class TileManager : MonoBehaviour
         //CreateTile(new Vector2(1, 1), 4);
         //Test hàm xóa tile ở vị trí vector2
         //DeleteTile(new Vector2(1, 0));
-        SpawnTileRandom();
-        SpawnTileRandom();
+        //SpawnTileRandom();
+        //SpawnTileRandom();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-#if UNITY_EDITOR
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            SpawnTileRandom();
-        }
-#endif
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            tileLoseCount = 0;
-            CallMoveRight();
-            SpawnTileRandom();
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            tileLoseCount = 0;
-            CallMoveLeft();
-            SpawnTileRandom();
-        }
+//#if UNITY_EDITOR
+//        if (Input.GetKeyUp(KeyCode.R))
+//        {
+//            SpawnTileRandom();
+//        }
+//#endif
+//        if (Input.GetKeyDown(KeyCode.D))
+//        {
+//            tileLoseCount = 0;
+//            CallMoveRight();
+//            SpawnTileRandom();
+//        }
+//        if (Input.GetKeyDown(KeyCode.A))
+//        {
+//            tileLoseCount = 0;
+//            CallMoveLeft();
+//            SpawnTileRandom();
+//        }
 
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            tileLoseCount = 0;
-            CallMoveUp();
-            SpawnTileRandom();
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            tileLoseCount = 0;
-            CallMoveDown();
-            SpawnTileRandom();
-        }
+//        if (Input.GetKeyDown(KeyCode.W))
+//        {
+//            tileLoseCount = 0;
+//            CallMoveUp();
+//            SpawnTileRandom();
+//        }
+//        if (Input.GetKeyDown(KeyCode.S))
+//        {
+//            tileLoseCount = 0;
+//            CallMoveDown();
+//            SpawnTileRandom();
+//        }
 
     }
 
@@ -167,28 +174,28 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    public void SpawnTileRandom()
-    {
-        var randomChange = Random.Range(0f, 1f);
-        int randomColumn = Mathf.RoundToInt(Random.Range(0, 4));
-        int randomRow = Mathf.RoundToInt(Random.Range(0, 4));
-        if (tiles[randomColumn, randomRow] != null)
-        {
-            Debug.Log("Cell " + randomColumn + " - " + randomRow + " has tile");
-            SpawnTileRandom();
-            return;
-        }
-        int randomValue;
-        if (randomChange < 0.85f)
-        {
-            randomValue = 2;
-        }
-        else
-        {
-            randomValue = 4;
-        }
-        CreateTile(new Vector2(randomColumn, randomRow), randomValue);
-    }
+    //public void SpawnTileRandom()
+    //{
+    //    var randomChange = Random.Range(0f, 1f);
+    //    int randomColumn = Mathf.RoundToInt(Random.Range(0, 4));
+    //    int randomRow = Mathf.RoundToInt(Random.Range(0, 4));
+    //    if (tiles[randomColumn, randomRow] != null)
+    //    {
+    //        Debug.Log("Cell " + randomColumn + " - " + randomRow + " has tile");
+    //        SpawnTileRandom();
+    //        return;
+    //    }
+    //    int randomValue;
+    //    if (randomChange < 0.85f)
+    //    {
+    //        randomValue = 2;
+    //    }
+    //    else
+    //    {
+    //        randomValue = 4;
+    //    }
+    //    CreateTile(new Vector2(randomColumn, randomRow), randomValue);
+    //}
 
     public void CreateTile(Vector2 pos, int value)
     {
