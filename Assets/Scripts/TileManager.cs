@@ -20,6 +20,8 @@ public class TileManager : MonoBehaviour
     public int rowCount = 4;
     public int tileLoseCount;
 
+    public GridManager gManager;
+
 
     private void Awake()
     {
@@ -29,14 +31,20 @@ public class TileManager : MonoBehaviour
     //tao mang vector2 tu 1 danh sach vi tri
     private void CreatePostion()
     {
-        for (int i = 0; i < allCells.Length; i++)
+        for (int i = 0; i < gManager.width; i++)
         {
-            int firstDimensionIndex = i / 4;
-            int secondDimensionIndex = i % columnCount;
-            //Debug.Log("secondDimensionIndex:" + secondDimensionIndex);
-            
-            positions[firstDimensionIndex, secondDimensionIndex] = allCells[i].transform.localPosition;
-        }
+            for (int j = 0; j < gManager.height; j++)
+            {
+                var cell = gManager.GetCellAtPosition(new Vector2(i, j));
+                if (!cell)
+                {
+                    Debug.Log("Lỗi thêm position của cell");
+                    return;
+                }
+                positions[i, j] = cell.transform.position;
+                Debug.Log("positions[" + i + ", " + j + "] = " + cell.transform.position);
+            }
+        }       
     }
 
     // Start is called before the first frame update

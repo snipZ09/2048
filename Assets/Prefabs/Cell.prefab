@@ -87,12 +87,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a98fba7a1b89441a6a6a9bc0e54e0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cLeft: {fileID: 0}
-  cRight: {fileID: 0}
-  cUp: {fileID: 0}
-  cDown: {fileID: 0}
-  xOffset: 0
-  yOffset: 0
-  isCell:
-    serializedVersion: 2
-    m_Bits: 0
+  xIndex: 0
+  yIndex: 0
+  hasTile: 0
+  baseColor: {r: 0, g: 0, b: 0, a: 0}
+  offsetColor: {r: 0, g: 0, b: 0, a: 0}
+  renderer: {fileID: 0}

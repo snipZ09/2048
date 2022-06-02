@@ -7,7 +7,11 @@ public class Cell : MonoBehaviour
     public static Cell instance;
     public int xIndex, yIndex;
     public bool hasTile = false;
+
+    [SerializeField] Color baseColor, offsetColor;
+    [SerializeField] SpriteRenderer sRenderer;
     
+
 
     private void Awake()
     {
@@ -30,5 +34,10 @@ public class Cell : MonoBehaviour
         {
             hasTile = false;
         }
+    }
+
+    public void Init(bool isOffset)
+    {
+        sRenderer.color = isOffset ? offsetColor : baseColor;
     }
 }
