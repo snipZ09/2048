@@ -4,35 +4,11 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] int _width, _height;
-    [SerializeField] Cell _cellPrefab;
-
-    [SerializeField] Transform _cam;
-    private Dictionary<Vector2, Cell> _cell;
-
-    public Dictionary<Vector2, Cell> dCell
-    {
-        get { return _cell; }
-        set { _cell = dCell; }
-    }
-
-    public int width
-    {
-        get => _width;
-        set
-        {
-            width = _width;
-        }
-    }
-
-    public int height
-    {
-        get => _height;
-        set
-        {
-            height = _height;
-        }
-    }
+    public int width, height;
+    public Cell cellPrefab;
+    public SpriteRenderer boardPrefab;
+    public Transform cam;
+    public Dictionary<Vector2, Cell> dCell;
 
     private void Start()
     {
@@ -41,37 +17,35 @@ public class GridManager : MonoBehaviour
 
     void GenerateGrid()
     {
-        _cell = new Dictionary<Vector2, Cell>();
-        for(int i = 0; i < _width; i++)
+        dCell = new Dictionary<Vector2, Cell>();
+        for(int x = 0; x < width; x++)
         {
-            for(int j = 0; j < _height; j++)
+            for(int y = 0; y < height; y++)
             {
-                var spawnedCell = Instantiate(_cellPrefab, new Vector2(i, j), Quaternion.identity);
-                spawnedCell.name = $"Cell {i} {j}";
-                var isOffset = (i % 2 == 0 && j % 2 != 0 || i % 2 != 0 && j % 2 == 0);
+                var spawnedCell = Instantiate(cellPrefab, new Vector2(x, y), Quaternion.identity);
+                spawnedCell.name = $"Cell {x} {y}";
+                var isOffset = (x % 2 != y % 2);
                 spawnedCell.Init(isOffset);
 
-                _cell[new Vector2(i, j)] = spawnedCell;
+                dCell[new Vector2(x, y)] = spawnedCell;
             }
         }
 
-        _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -10);
+        //-0.5f vì các cell đều ở giữa mỗi Vector. VD: sprite mỗi cell ở vị trí 0,0 thì nó trải dài từ -0.5 đến 0.5 ở x
+        var center = new Vector2((float)width / 2 - 0.5f, (float)height / 2 - 0.5f);
+        cam.transform.position = new Vector3 (center.x, center.y, -10);
+        var board = Instantiate(boardPrefab, center, Quaternion.identity);
+        board.size = new Vector2(width, height);
+
+
     }
 
     public Cell GetCellAtPosition(Vector2 pos)
     {
-        try
+        if (dCell.TryGetValue(pos, out var cell))
         {
-            if (dCell.TryGetValue(pos, out var cell))
-            {
-                return cell;
-            }
-                
-        }
-        catch(MissingReferenceException e)
-        {
-            Debug.Log(e.Message);
-        }
+            return cell;
+        }    
         return null;
-    }
+    }   
 }
